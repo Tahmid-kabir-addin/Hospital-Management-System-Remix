@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  uname     String   @unique
+  password  String   @db.VarChar(32)
+  createdAt DateTime @default(now())
+}
+
+model Patient {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(30)
+  phone     String   @db.Char(11)
+  createdAt DateTime @default(now())
+  due       Float    @default(0)
+  bed       Bed?
+}
+
+model Bed {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(10)
+  free      Boolean  @default(true)
+  patientId Int?     @unique
+  patient   Patient? @relation(fields: [patientId], references: [id])
+}

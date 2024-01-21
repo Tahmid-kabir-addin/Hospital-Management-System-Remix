@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Bed` MODIFY `free` BOOLEAN NOT NULL DEFAULT true;
